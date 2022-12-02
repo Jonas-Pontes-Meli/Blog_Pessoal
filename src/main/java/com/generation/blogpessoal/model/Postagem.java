@@ -1,37 +1,47 @@
 package com.generation.blogpessoal.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.UpdateTimestamp;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+
+
 @Entity
-@Table( name ="tb_postagens")
+@Table(name = "tb_postagens")
 public class Postagem {
+
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private  Long  id ;
-    @NotBlank(message = "O Atributo Titulo não pode ser nulo ou vazio!")
-    @Size(min = 5, max = 100, message = " O Atributo Titulo deve conter no minimo 5 e no máximo 100 caracteres")
+    @NotNull(message = "O atributo id é Obrigatório!")
+    private  Long id;
+
+
+    @NotBlank(message = "O atributo título é Obrigatório e não pode utilizar espaços em branco!")
+    @Size(min = 5, max = 100, message = "O atributo título deve conter no mínimo 05 e no máximo 100 caracteres")
     private String titulo;
-    @NotBlank(message = "O atributo texto é Obrigatório!")
-    @Size(min = 10 , max = 100 , message =  " O Atributo Texto deve conter no minimo 5 e no máximo 100 caracteres")
+
+    @NotNull(message = "O atributo texto é Obrigatório!")
+    @Size(min = 10, max = 1000, message = "O atributo texto deve conter no mínimo 10 e no máximo 1000 caracteres")
     private String texto;
+
+
     @UpdateTimestamp
-    private LocalDate data;
+    private LocalDateTime data;
+
     @ManyToOne
     @JsonIgnoreProperties("postagem")
-    private  Tema tema;
+    private Tema tema;
+    @ManyToOne
+    @JsonIgnoreProperties("postagem")
+    private Usuario usuario;
 
-    public Tema getTema() {
-        return tema;
-    }
 
-    public void setTema(Tema tema) {
-        this.tema = tema;
-    }
 
     public Long getId() {
         return id;
@@ -57,11 +67,20 @@ public class Postagem {
         this.texto = texto;
     }
 
-    public LocalDate getData() {
+    public LocalDateTime getData() {
         return data;
     }
 
-    public void setData(LocalDate data) {
+    public void setData(LocalDateTime data) {
         this.data = data;
     }
+
+    public Tema getTema() {
+        return tema;
+    }
+
+    public void setTema(Tema tema) {
+        this.tema = tema;
+    }
+
 }
