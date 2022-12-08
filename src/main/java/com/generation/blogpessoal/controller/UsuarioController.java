@@ -29,7 +29,7 @@ public class UsuarioController {
 
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("buscarporid/{id}")
     public ResponseEntity<Usuario> getById(@PathVariable Long id) {
         return usuarioRepository.findById(id)
                 .map(resposta -> ResponseEntity.ok(resposta))
@@ -43,10 +43,10 @@ public class UsuarioController {
                 .orElse(ResponseEntity.status(HttpStatus.UNAUTHORIZED).build());
     }
 
-    @PostMapping("/cadastrar")
+    @PostMapping ("/cadastrar")
     public ResponseEntity<Usuario> postUsuario(@Valid @RequestBody Usuario usuario) {
 
-        return usuarioService.cadastrarUsiario(usuario)
+        return usuarioService.cadastrarUsuario(usuario)
                 .map(resposta -> ResponseEntity.status(HttpStatus.CREATED).body(resposta))
                 .orElse(ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
 
@@ -54,7 +54,7 @@ public class UsuarioController {
 
     @PutMapping("/atualizar")
     public ResponseEntity<Usuario> putUsuario(@Valid @RequestBody Usuario usuario) {
-        return usuarioService.AtualizarUsiario(usuario)
+        return usuarioService.atualizarUsuario(usuario)
                 .map(resposta -> ResponseEntity.status(HttpStatus.OK).body(resposta))
                 .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }

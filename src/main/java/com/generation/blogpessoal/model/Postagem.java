@@ -9,6 +9,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 
 @Entity
@@ -40,6 +41,12 @@ public class Postagem {
     @ManyToOne
     @JsonIgnoreProperties("postagem")
     private Usuario usuario;
+
+    @OneToMany(mappedBy = "postagem", cascade = CascadeType.REMOVE)
+    @JsonIgnoreProperties("postagem")
+    private List<Comentario> comentario;
+
+
 
 
 

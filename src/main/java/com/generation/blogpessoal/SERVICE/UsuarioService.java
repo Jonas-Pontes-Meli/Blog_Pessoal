@@ -19,7 +19,7 @@ public class UsuarioService {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
-    public Optional<Usuario> cadastrarUsiario(Usuario usuario)
+    public Optional<Usuario> cadastrarUsuario(Usuario usuario)
     {
         if (usuarioRepository.findByUsuario(usuario.getUsuario()).isPresent()) {
 
@@ -29,7 +29,7 @@ public class UsuarioService {
         return Optional.empty();
 
     }
-    public Optional<Usuario> AtualizarUsiario(Usuario usuario)
+    public Optional<Usuario> atualizarUsuario(Usuario usuario)
     {
         if(usuarioRepository.findById(usuario.getId()).isPresent()) {
 
