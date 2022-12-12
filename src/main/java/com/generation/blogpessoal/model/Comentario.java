@@ -16,13 +16,13 @@ public class Comentario {
     @UpdateTimestamp
     private LocalDateTime data;
 
-    @ManyToOne
+/*    @ManyToOne
     @JsonIgnoreProperties("comentario")
     private Usuario usuario;
 
     @ManyToOne
     @JsonIgnoreProperties("comentario")
-    private Postagem postagem;
+    private Postagem postagem;*/
 
     public long getId() {
         return id;
@@ -48,7 +48,7 @@ public class Comentario {
         this.data = data;
     }
 
-    public Usuario getUsuario() {
+/*    public Usuario getUsuario() {
         return usuario;
     }
 
@@ -62,5 +62,5 @@ public class Comentario {
 
     public void setPostagem(Postagem postagem) {
         this.postagem = postagem;
-    }
+    }*/
 }

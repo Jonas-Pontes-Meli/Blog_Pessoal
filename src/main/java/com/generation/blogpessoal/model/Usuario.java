@@ -15,6 +15,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.http.HttpEntity;
 
 @Entity
@@ -27,7 +28,7 @@ public class Usuario {
 
 	@NotNull(message = "O atributo Nome é Obrigatório!")
 	private String nome;
-
+	@Schema(example = "email@email.com.br")
 	@NotNull(message = "O atributo Usuário é Obrigatório!")
 	@Email(message = "O atributo Usuário deve ser um email válido!")
 	private String usuario;
@@ -53,18 +54,6 @@ public class Usuario {
 	@JsonIgnoreProperties("usuario")
 	private List<Postagem> postagem;
 
-	@OneToMany(mappedBy = "usuario", cascade = CascadeType.REMOVE)
-	@JsonIgnoreProperties("usuario")
-	private List<Comentario> comentario;
-
-	public List<Comentario> getComentario() {
-		return comentario;
-	}
-
-	public void setComentario(List<Comentario> comentario) {
-		this.comentario = comentario;
-	}
-	/* Insira os Getters and Setters */
 
 	public Long getId() {
 		return id;

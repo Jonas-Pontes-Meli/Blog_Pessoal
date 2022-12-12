@@ -42,10 +42,18 @@ public class UsuarioControllerTest {
     @DisplayName("Cadastrar um Usuário")
     public void deveCriarUmUsuario() {
 
-        HttpEntity<Usuario> corpoRequisicao = new HttpEntity<Usuario>(new Usuario(0L,"Fulano", "fulano@email.com", "12345678", " "));
+        HttpEntity<Usuario> corpoRequisicao = new HttpEntity<>(new Usuario(0L, "fulano", "fulano@email.com2", "123456789", " "));
 
         ResponseEntity<Usuario> corpoResposta = testRestTemplate
+                .withBasicAuth("root@.com","rootroot")
                 .exchange("/usuarios/cadastrar", HttpMethod.POST, corpoRequisicao, Usuario.class);
+        ResponseEntity<Usuario> corpoResposta3 = testRestTemplate.exchange("/usuarios/cadastrar", HttpMethod.POST, corpoRequisicao, Usuario.class);
+        ResponseEntity<Usuario> corpoResposta4 = testRestTemplate.exchange("/usuarios/cadastrar", HttpMethod.POST, corpoRequisicao, Usuario.class);
+        ResponseEntity<Usuario> corpoResposta5 = testRestTemplate.exchange("/usuarios/cadastrar", HttpMethod.POST, corpoRequisicao, Usuario.class);
+        ResponseEntity<Usuario> corpoResposta6 = testRestTemplate.exchange("/usuarios/cadastrar", HttpMethod.POST, corpoRequisicao, Usuario.class);
+        ResponseEntity<Usuario> corpoResposta7 = testRestTemplate.exchange("/usuarios/cadastrar", HttpMethod.POST, corpoRequisicao, Usuario.class);
+        ResponseEntity<Usuario> corpoResposta8 = testRestTemplate.exchange("/usuarios/cadastrar", HttpMethod.POST, corpoRequisicao, Usuario.class);
+        ResponseEntity<Usuario> corpoResposta9 = testRestTemplate.exchange("/usuarios/cadastrar", HttpMethod.POST, corpoRequisicao, Usuario.class);
 
         assertEquals(HttpStatus.CREATED, corpoResposta.getStatusCode());
         assertEquals(corpoRequisicao.getBody().getNome(), corpoResposta.getBody().getNome());

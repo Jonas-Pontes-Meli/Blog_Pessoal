@@ -31,6 +31,13 @@ public class Postagem {
     @Size(min = 10, max = 1000, message = "O atributo texto deve conter no mínimo 10 e no máximo 1000 caracteres")
     private String texto;
 
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
 
     @UpdateTimestamp
     private LocalDateTime data;
@@ -42,9 +49,9 @@ public class Postagem {
     @JsonIgnoreProperties("postagem")
     private Usuario usuario;
 
-    @OneToMany(mappedBy = "postagem", cascade = CascadeType.REMOVE)
+/*    @OneToMany(mappedBy = "postagem", cascade = CascadeType.REMOVE)
     @JsonIgnoreProperties("postagem")
-    private List<Comentario> comentario;
+    private List<Comentario> comentario;*/
 
 
 

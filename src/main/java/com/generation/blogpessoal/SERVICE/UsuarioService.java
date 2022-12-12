@@ -21,32 +21,68 @@ public class UsuarioService {
 
     public Optional<Usuario> cadastrarUsuario(Usuario usuario)
     {
-        if (usuarioRepository.findByUsuario(usuario.getUsuario()).isPresent()) {
+        if (usuarioRepository.findByUsuario(usuario.getUsuario()).isPresent())
+            return Optional.empty();
 
-            usuario.setSenha(criptografarsenha(usuario.getSenha()));
-            return  Optional.of(usuarioRepository.save(usuario));
-        }
-        return Optional.empty();
+        /**
+         * Se o Usuário não existir no Banco de Dados, a senha será criptografada
+         * através do Método criptografarSenha.
+         */
+        usuario.setSenha(criptografarsenha(usuario.getSenha()));
+
+        /**
+         * Assim como na Expressão Lambda, o resultado do método save será retornado dentro
+         * de um Optional, com o Usuario persistido no Banco de Dados.
+         *
+         * of​ -> Retorna um Optional com o valor fornecido, mas o valor não pode ser nulo.
+         * Se não tiver certeza de que o valor não é nulo use ofNullable.
+         */
+        return Optional.of(usuarioRepository.save(usuario));
 
     }
     public Optional<Usuario> atualizarUsuario(Usuario usuario)
     {
         if(usuarioRepository.findById(usuario.getId()).isPresent()) {
 
+            /**
+             * Cria um Objeto Optional com o resultado do método findById
+             */
             Optional<Usuario> buscaUsuario = usuarioRepository.findByUsuario(usuario.getUsuario());
 
+            /**
+             * Se o Usuário existir no Banco de dados e o Id do Usuário encontrado no Banco for
+             * diferente do usuário do Id do Usuário enviado na requisição, a Atualização dos
+             * dados do Usuário não pode ser realizada.
+             */
             if ( (buscaUsuario.isPresent()) && ( buscaUsuario.get().getId() != usuario.getId()))
                 throw new ResponseStatusException(
                         HttpStatus.BAD_REQUEST, "Usuário já existe!", null);
 
+            /**
+             * Se o Usuário existir no Banco de Dados e o Id for o mesmo, a senha será criptografada
+             * através do Método criptografarSenha.
+             */
             usuario.setSenha(criptografarsenha(usuario.getSenha()));
 
+            /**
+             * Assim como na Expressão Lambda, o resultado do método save será retornado dentro
+             * de um Optional, com o Usuario persistido no Banco de Dados ou um Optional vazio,
+             * caso aconteça algum erro.
+             *
+             * ofNullable​ -> Se um valor estiver presente, retorna um Optional com o valor,
+             * caso contrário, retorna um Optional vazio.
+             */
             return Optional.ofNullable(usuarioRepository.save(usuario));
 
         }
 
+        /**
+         * empty -> Retorna uma instância de Optional vazia, caso o usuário não seja encontrado.
+         */
         return Optional.empty();
+
     }
+
     public  Optional<UsuarioLogin> autenticarUsuario(Optional<UsuarioLogin> usuarioLogin)
     {
         Optional<Usuario> usuario = usuarioRepository.findByUsuario(usuarioLogin.get().getUsuario());
